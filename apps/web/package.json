@@ -13,7 +13,7 @@
     "@telebook/shared": "*",
     "clsx": "^2.1.1",
     "dompurify": "^3.2.3",
-    "katex": "^0.16.11",
+    "katex": "^0.19.1",
     "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
