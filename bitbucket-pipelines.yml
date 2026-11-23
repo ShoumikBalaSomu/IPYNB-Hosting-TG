@@ -1,0 +1,33 @@
+image: node:22
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Node Tests & Typecheck
+            caches:
+              - node
+            script:
+              - npm ci
+              - npm run --workspace=packages/shared typecheck
+              - npm run --workspace=apps/worker typecheck
+              - npm test
+        - step:
+            name: Python CLI & Local Server Tests
+            image: python:3.11-slim
+            script:
+              - apt-get update && apt-get install -y --no-install-recommends git gcc libffi-dev && rm -rf /var/lib/apt/lists/*
+              - python -m pip install --upgrade pip
+              - pip install -e ./packages/cli[test] pytest pytest-asyncio fastapi httpx uvicorn cryptography
+              - pytest packages/cli/tests apps/local-server/tests
+        - step:
+            name: Secret Hygiene Scan
+            image: alpine:latest
+            script:
+              - apk add --no-cache grep git
+              - |
+                if git grep -E '(ghp_[a-zA-Z0-9]{36}|glpat-[a-zA-Z0-9_\-\.]{20,}|[0-9]{8,10}:[a-zA-Z0-9_-]{35})'; then
+                  echo "FAIL: Disallowed secret token detected."
+                  exit 1
+                fi
+                echo "Secret scan passed."

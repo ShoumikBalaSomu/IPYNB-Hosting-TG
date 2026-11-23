@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telebook-local-server"
+version = "1.0.0"
+description = "Self-hosted TeleBook backend parity server with SQLite and Telegram storage"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "TeleBook Core Team"}
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "httpx>=0.25.0",
+    "pydantic>=2.0.0",
+    "cryptography>=41.0.0",
+    "watchfiles>=0.20.0"
+]
+
+[project.scripts]
+telebook-server = "local_server.main:run"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["local_server*"]

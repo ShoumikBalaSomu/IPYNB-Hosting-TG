@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TeleBook Isolated Output Sandbox</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: auto;
+      overflow-y: hidden;
+      background: transparent;
+      color: inherit;
+    }
+  </style>
+  <!-- Load Plotly CDN fallback if plotly figures are rendered -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" async></script>
+</head>
+<body>
+  <div id="output-container"></div>
+  <script>
+    (function() {
+      var container = document.getElementById('output-container');
+      
+      // Auto-resize observer to notify parent container of content height
+      function notifyResize() {
+        var height = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          container.scrollHeight
+        );
+        window.parent.postMessage({ type: 'TELEBOOK_IFRAME_RESIZE', height: height }, '*');
+      }
+
+      var resizeObserver = new ResizeObserver(function() {
+        notifyResize();
+      });
+      resizeObserver.observe(document.body);
+      resizeObserver.observe(container);
+
+      window.addEventListener('message', function(event) {
+        if (!event.data || typeof event.data !== 'object') return;
+        
+        if (event.data.type === 'RENDER_PAYLOAD') {
+          var payload = event.data.html || '';
+          container.innerHTML = payload;
+          
+          // Re-execute scripts injected via innerHTML
+          var scripts = container.querySelectorAll('script');
+          scripts.forEach(function(oldScript) {
+            var newScript = document.createElement('script');
+            Array.from(oldScript.attributes).forEach(function(attr) {
+              newScript.setAttribute(attr.name, attr.value);
+            });
+            newScript.textContent = oldScript.textContent;
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+          });
+          
+          setTimeout(notifyResize, 100);
+          setTimeout(notifyResize, 500);
+        }
+      });
+
+      // Notify parent that iframe is ready to receive payloads
+      window.parent.postMessage({ type: 'TELEBOOK_IFRAME_READY' }, '*');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "@telebook/cli",
+  "version": "1.0.0",
+  "description": "TeleBook CLI tool for Jupyter Notebook hosting and syncing",
+  "private": true,
+  "scripts": {
+    "test": "if [ -f ../../.venv/bin/pytest ]; then ../../.venv/bin/pytest; else pytest; fi",
+    "build": "echo 'Python package telebook configured'"
+  }
+}
