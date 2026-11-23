@@ -11,7 +11,7 @@
     "@telebook/shared": "*",
     "dompurify": "^3.2.4",
     "katex": "^0.16.21",
-    "zod": "^3.24.2"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
