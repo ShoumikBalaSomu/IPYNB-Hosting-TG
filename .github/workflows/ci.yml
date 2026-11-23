@@ -27,20 +27,21 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ./packages/cli[test] pytest pytest-asyncio fastapi httpx uvicorn cryptography
+          pip install -e ./apps/local-server
+
       - name: Typecheck
         run: |
           npm run --workspace=packages/shared typecheck
           npm run --workspace=apps/worker typecheck
 
-      - name: Run JS/TS test suites
+      - name: Run test suites
         run: npm test
 
-      - name: Install Python CLI dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e ./packages/cli[test] pytest pytest-asyncio fastapi httpx uvicorn cryptography
-
-      - name: Run Python test suite
+      - name: Dedicated Python test verification
         run: |
           pytest packages/cli/tests apps/local-server/tests
 

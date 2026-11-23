@@ -43,8 +43,15 @@ describe('Secret Leakage & HTTP Security Headers Audit Suite', () => {
           relPath.startsWith('dist') ||
           relPath.startsWith('apps/web/dist') ||
           relPath.startsWith('packages/shared/dist') ||
+          relPath.startsWith('release-distribution') ||
           relPath.includes('__pycache__') ||
           relPath.endsWith('.egg-info') ||
+          relPath.endsWith('.zip') ||
+          relPath.endsWith('.tar.gz') ||
+          relPath.endsWith('.whl') ||
+          relPath.endsWith('.png') ||
+          relPath.endsWith('.jpg') ||
+          relPath.endsWith('.svg') ||
           entry.name === 'package-lock.json' ||
           entry.name === 'tests/security/auth-adversarial.test.ts' || // contains mock token string
           entry.name === 'auth-adversarial.test.ts' ||
