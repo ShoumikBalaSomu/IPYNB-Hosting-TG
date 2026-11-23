@@ -20,7 +20,7 @@ import type { Env } from '../../apps/worker/src/env';
 import app from '../../apps/worker/src/index';
 
 describe('Adversarial Authentication & Perimeter Defense', () => {
-  const TEST_BOT_TOKEN = '123456789:ABCdefGHIjklMNOpqrSTUvwxYZ_01234567';
+  const TEST_BOT_TOKEN = 'mock_bot_token_adversarial_test_987';
   const OWNER_ID = '777888999';
   const ATTACKER_ID = '999111222';
   const WEBHOOK_SECRET = 'super-secret-telegram-webhook-token-random-hex-32';
