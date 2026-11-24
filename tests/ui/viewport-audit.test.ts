@@ -62,4 +62,22 @@ describe('UI & Viewport Layout Audit Suite', () => {
     expect(indexCss).toContain('animation-duration: 0.01ms');
     expect(indexCss).toContain('transition-duration: 0.01ms');
   });
+
+  it('BOT API 10.x WEBAPP SDK: Implements fullscreen, home screen, safeAreaInset, and native file download', () => {
+    const hookTs = fs.readFileSync(path.join(WEB_SRC_DIR, 'hooks/useTelegramWebApp.ts'), 'utf-8');
+    const typesTs = fs.readFileSync(path.join(WEB_SRC_DIR, 'types/telegram.ts'), 'utf-8');
+
+    expect(hookTs).toContain('toggleFullscreen');
+    expect(hookTs).toContain('addToHomeScreen');
+    expect(hookTs).toContain('downloadFile');
+    expect(hookTs).toContain('safeAreaInset');
+    expect(hookTs).toContain('isFullscreen');
+
+    expect(typesTs).toContain('requestFullscreen');
+    expect(typesTs).toContain('exitFullscreen');
+    expect(typesTs).toContain('addToHomeScreen');
+    expect(typesTs).toContain('downloadFile');
+    expect(typesTs).toContain('BiometricManager');
+    expect(typesTs).toContain('CloudStorage');
+  });
 });

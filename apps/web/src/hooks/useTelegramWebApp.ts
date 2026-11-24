@@ -154,10 +154,62 @@ export function useTelegramWebApp() {
     }
   };
 
+  // Bot API 10.x Fullscreen Controls
+  const toggleFullscreen = () => {
+    try {
+      const webApp = window.Telegram?.WebApp;
+      if (webApp?.isFullscreen) {
+        webApp.exitFullscreen?.();
+      } else {
+        webApp?.requestFullscreen?.();
+      }
+    } catch {
+      // Fallback: no-op
+    }
+  };
+
+  // Bot API 10.x Home Screen Shortcut
+  const addToHomeScreen = () => {
+    try {
+      window.Telegram?.WebApp?.addToHomeScreen?.();
+    } catch {
+      // Fallback: no-op
+    }
+  };
+
+  // Bot API 10.x Native File Download
+  const downloadFile = (url: string, fileName: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      try {
+        const webApp = window.Telegram?.WebApp;
+        if (webApp?.downloadFile) {
+          webApp.downloadFile({ url, file_name: fileName }, (accepted) => {
+            resolve(accepted);
+          });
+        } else {
+          // Browser fallback: trigger blob download
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.target = '_blank';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          resolve(true);
+        }
+      } catch {
+        resolve(false);
+      }
+    });
+  };
+
   return {
     ...tgState,
     webApp: typeof window !== 'undefined' ? window.Telegram?.WebApp : undefined,
     haptic,
     setClosingConfirmation,
+    toggleFullscreen,
+    addToHomeScreen,
+    downloadFile,
   };
 }

@@ -134,6 +134,11 @@ export interface TelegramWebApp {
   exitFullscreen?(): void;
   addToHomeScreen?(): void;
   checkHomeScreenStatus?(callback: (status: 'unsupported' | 'unknown' | 'added' | 'missed') => void): void;
+  downloadFile?(params: { url: string; file_name: string }, callback?: (accepted: boolean) => void): void;
+  startOrientationTracking?(params?: { need_absolute?: boolean }, callback?: () => void): void;
+  stopOrientationTracking?(callback?: () => void): void;
+  setEmojiStatus?(custom_emoji_id: string, params?: { duration?: number }, callback?: (success: boolean) => void): void;
+  requestWriteAccess?(callback?: (granted: boolean) => void): void;
   setBottomBarColor?(color: string): void;
   shareToStory?(mediaUrl: string, params?: Record<string, unknown>): void;
   shareMessage?(msgId: string, callback?: (sent: boolean) => void): void;

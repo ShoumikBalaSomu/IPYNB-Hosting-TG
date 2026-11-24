@@ -96,3 +96,29 @@ class BotPoller:
                 "text": f"🔒 *Global Session Revocation Complete!*\nNew epoch: `{new_epoch}`",
                 "parse_mode": "Markdown",
             })
+        elif text == "/settings":
+            await client.post(send_url, json={
+                "chat_id": chat_id,
+                "text": (
+                    "⚙️ *TeleBook Sovereign Bot Settings (Bot API 10.3/10.5)*\n\n"
+                    "• *Rich Messages*: Enabled (tables, preformatted code, buttons)\n"
+                    "• *Ephemeral Mode*: Supported (120s ephemeral magic tokens)\n"
+                    "• *Topic Sidebar*: Supported in private chat (`has_topic_sidebar`)\n"
+                    "• *Single-Owner Lock*: Active (`OWNER_TELEGRAM_ID`)\n"
+                    "• *Storage Ceiling*: 15 MB chunking over Telegram Bot API"
+                ),
+                "parse_mode": "Markdown",
+            })
+        elif text == "/help":
+            await client.post(send_url, json={
+                "chat_id": chat_id,
+                "text": (
+                    "📖 *TeleBook Bot API 10.3 Commands Reference*\n\n"
+                    "/start - Launch TeleBook Mini App workspace\n"
+                    "/login - Authenticate desktop terminal\n"
+                    "/settings - View Bot API 10.3/10.5 settings\n"
+                    "/revoke - Invalidate all active device sessions\n"
+                    "/help - Show this guide"
+                ),
+                "parse_mode": "Markdown",
+            })

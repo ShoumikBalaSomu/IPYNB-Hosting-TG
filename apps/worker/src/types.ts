@@ -135,3 +135,69 @@ export interface SharingTicketRecord {
   max_access_count: number;
   created_at: number;
 }
+
+// ============================================================================
+// Telegram Bot API 10.1 - 10.5 Types
+// ============================================================================
+
+export interface RichMessageButton {
+  text: string;
+  url?: string;
+  callback_data?: string;
+  web_app?: { url: string };
+  is_disabled?: boolean;
+}
+
+export type RichBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'section_heading'; text: string; level?: 1 | 2 | 3 }
+  | { type: 'preformatted'; text: string; language?: string }
+  | { type: 'table'; rows: { cells: { text: string }[] }[]; is_compact?: boolean }
+  | { type: 'list'; items: string[]; ordered?: boolean }
+  | { type: 'divider' }
+  | { type: 'expandable_blockquote'; text: string }
+  | { type: 'thinking'; status_text: string; is_active?: boolean }
+  | { type: 'buttons'; buttons: RichMessageButton[][] }
+  | { type: 'document'; file_name: string; file_size?: number };
+
+export interface InputRichMessage {
+  blocks: RichBlock[];
+  version?: '10.3' | string;
+  stop_generation_supported?: boolean;
+}
+
+export interface EphemeralMessageOptions {
+  chat_id: number | string;
+  receiver_user_id: number;
+  text: string;
+  parse_mode?: 'HTML' | 'MarkdownV2';
+  ephemeral_duration_seconds?: number;
+  reply_markup?: {
+    inline_keyboard?: RichMessageButton[][];
+  };
+}
+
+export interface BotSettings {
+  has_topic_sidebar?: boolean;
+  can_join_groups?: boolean;
+  can_read_all_group_messages?: boolean;
+  supports_inline_queries?: boolean;
+  can_connect_to_business?: boolean;
+}
+
+export interface BotFullInfo {
+  id: number;
+  is_bot: true;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  can_join_groups: boolean;
+  can_read_all_group_messages: boolean;
+  supports_inline_queries: boolean;
+  can_connect_to_business?: boolean;
+  has_main_web_app?: boolean;
+  has_topic_sidebar?: boolean;
+  description?: string;
+  short_description?: string;
+}
+

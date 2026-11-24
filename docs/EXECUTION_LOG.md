@@ -176,3 +176,22 @@
   - Created automated setup tool `scripts/setup_bot_profile.py` configuring bot display name, short/full descriptions, scoped commands (`/start`, `/list`, `/search`, `/login`, `/versions`, `/export`, `/revoke`, `/help`), and Mini App chat menu button.
   - Published comprehensive technical report: `docs/06_BOT_AUDIT.md`.
 - **Monorepo Test Pass**: 156/156 automated tests passing cleanly with zero failures and zero secret leaks.
+
+---
+
+## Gate 13: Full Telegram Bot API 10.3 / 10.5 Modernization & Feature Unlock (COMPLETED)
+- **Rich Messages Specification (Bot API 10.1 & 10.3)**:
+  - Implemented `InputRichMessageSchema` in `@telebook/shared` supporting `RichBlockParagraph`, `RichBlockSectionHeading`, `RichBlockPreformatted` (with syntax highlighting), `RichBlockTable` (with `is_compact: true`), `RichBlockList`, `RichBlockDivider`, `RichBlockExpandableBlockQuotation`, `RichBlockThinking`, `RichBlockButtons`, and `RichBlockDocument`.
+  - Added live response streaming via `sendRichMessageDraft` and generation-stoppage controls via `stopMessageGeneration` and `MessageGenerationStopped`.
+- **Ephemeral Messages Lifecycle (Bot API 10.2)**:
+  - Implemented `EphemeralMessageOptionsSchema` with strict `receiver_user_id` routing.
+  - Added `sendEphemeralMessage`, `editEphemeralMessageText`, and `deleteEphemeralMessage` for vanishing 120s ephemeral magic tokens and private execution results.
+- **Bot Configuration & Settings (Bot API 10.5)**:
+  - Implemented `setMySettings` enabling topic sidebars (`has_topic_sidebar: true`), inline queries, and business bot connections.
+  - Added `BotFullInfoSchema` reflecting modern `getMe` payload structure.
+- **Mini App WebApp SDK 10.x Enhancements**:
+  - Implemented `requestFullscreen()`, `exitFullscreen()`, `isFullscreen`, `addToHomeScreen()`, `checkHomeScreenStatus()`, `downloadFile({ url, file_name })`, and `safeAreaInset` in `apps/web`.
+- **Automated Setup Tool Upgrade**:
+  - Enhanced `scripts/setup_bot_profile.py` to configure Bot API 10.5 `setMySettings`, 9 scoped slash commands, and Mini App menu button.
+- **Monorepo Test Pass**: **165/165 tests passing** (0 failures, 0 warnings, 0 secret leaks) across all 6 workspaces.
+- **Published Master Architecture**: Published complete specification in `docs/06_BOT_AUDIT.md`.
