@@ -17,6 +17,8 @@ export interface TelegramState {
   viewportHeight: number;
   viewportStableHeight: number;
   isExpanded: boolean;
+  isFullscreen: boolean;
+  safeAreaInset: { top: number; bottom: number; left: number; right: number };
 }
 
 export function useTelegramWebApp() {
@@ -38,6 +40,8 @@ export function useTelegramWebApp() {
       viewportHeight: webApp?.viewportHeight || (typeof window !== 'undefined' ? window.innerHeight : 800),
       viewportStableHeight: webApp?.viewportStableHeight || (typeof window !== 'undefined' ? window.innerHeight : 800),
       isExpanded: webApp?.isExpanded || false,
+      isFullscreen: webApp?.isFullscreen || false,
+      safeAreaInset: webApp?.safeAreaInset || { top: 0, bottom: 0, left: 0, right: 0 },
     };
   });
 
@@ -90,6 +94,8 @@ export function useTelegramWebApp() {
         viewportHeight: webApp.viewportHeight,
         viewportStableHeight: webApp.viewportStableHeight,
         isExpanded: webApp.isExpanded,
+        isFullscreen: webApp.isFullscreen || false,
+        safeAreaInset: webApp.safeAreaInset || { top: 0, bottom: 0, left: 0, right: 0 },
       }));
     };
 

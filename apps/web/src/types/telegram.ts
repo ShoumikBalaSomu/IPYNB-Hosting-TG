@@ -78,6 +78,65 @@ export interface TelegramWebApp {
     notificationOccurred(type: 'error' | 'success' | 'warning'): void;
     selectionChanged(): void;
   };
+  // Bot API 7.0 - 8.0+ Modern Additions
+  isFullscreen?: boolean;
+  safeAreaInset?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+  contentSafeAreaInset?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+  bottomBarColor?: string;
+  SecondaryButton?: {
+    text: string;
+    color: string;
+    textColor: string;
+    isVisible: boolean;
+    isActive: boolean;
+    isProgressVisible: boolean;
+    setText(text: string): void;
+    onClick(callback: () => void): void;
+    offClick(callback: () => void): void;
+    show(): void;
+    hide(): void;
+    enable(): void;
+    disable(): void;
+  };
+  BiometricManager?: {
+    isInited: boolean;
+    isBiometricAvailable: boolean;
+    biometricType: 'finger' | 'face' | 'unknown';
+    isAccessRequested: boolean;
+    isAccessGranted: boolean;
+    isBiometricTokenSaved: boolean;
+    deviceId: string;
+    init(callback?: () => void): void;
+    requestAccess(params: { reason?: string }, callback?: (granted: boolean) => void): void;
+    authenticate(params: { reason?: string }, callback?: (authenticated: boolean, biometricToken?: string) => void): void;
+    updateBiometricToken(token: string, callback?: (updated: boolean) => void): void;
+    openSettings(): void;
+  };
+  CloudStorage?: {
+    setItem(key: string, value: string, callback?: (error: Error | null, stored?: boolean) => void): void;
+    getItem(key: string, callback?: (error: Error | null, value?: string) => void): void;
+    getItems(keys: string[], callback?: (error: Error | null, values?: Record<string, string>) => void): void;
+    removeItem(key: string, callback?: (error: Error | null, removed?: boolean) => void): void;
+    removeItems(keys: string[], callback?: (error: Error | null, removed?: boolean) => void): void;
+    getKeys(callback?: (error: Error | null, keys?: string[]) => void): void;
+  };
+  requestFullscreen?(): void;
+  exitFullscreen?(): void;
+  addToHomeScreen?(): void;
+  checkHomeScreenStatus?(callback: (status: 'unsupported' | 'unknown' | 'added' | 'missed') => void): void;
+  setBottomBarColor?(color: string): void;
+  shareToStory?(mediaUrl: string, params?: Record<string, unknown>): void;
+  shareMessage?(msgId: string, callback?: (sent: boolean) => void): void;
   ready(): void;
   expand(): void;
   close(): void;
